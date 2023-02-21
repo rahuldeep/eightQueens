@@ -59,19 +59,17 @@ export const handler = async(event,context) => {
 
 
 
-function place(column,row,counter){
+function markQueensShadow(column,row,counter){
     for (i=0;i<7;i++){
         chessBoard[i][row]+=counter;
+        console.log ("shadow @" + column + row);
      }
      for (i=0;i<7;i++){
         chessBoard[column][i] +=counter;
+        console.log ("shadow @" + column + row);
      }
 
 };
-
-function markQueensShadow(){};
-
-
 
 
 };
