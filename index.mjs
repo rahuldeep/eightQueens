@@ -1,7 +1,7 @@
 
 
 export const handler = async(event,context) => {
-    
+    //INTITIALIZE 8X8 ARRAY
     var count = 1;
     var chessBoard =[];
 
@@ -13,12 +13,12 @@ export const handler = async(event,context) => {
         row.push(0);
         count++;
     }
-
     chessBoard.push(row);
-
     }
     
+   
     
+    chessBoard [0],[1] = 1;
     const response = {
         statusCode: 200,
         body: JSON.stringify(chessBoard),
