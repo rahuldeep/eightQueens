@@ -21,7 +21,7 @@ export const handler = async(event,context) => {
     var column = 0;
     var row = 0;
     
-    while (!solved){
+    while (solved){
 
         while (placed && row <8){
             console.log(chessBoard[column][row]);
@@ -63,7 +63,7 @@ export const handler = async(event,context) => {
 
 
     
-    chessBoard [0][1] = 1;
+  
     const response = {
         statusCode: 200,
         body: JSON.stringify(chessBoard),
