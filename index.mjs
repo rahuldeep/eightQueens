@@ -1,14 +1,15 @@
 
 
 export const handler = async(event,context) => {
+    let boardSize = 3;
     //INTITIALIZE 8X8 ARRAY
     var count = 1;
     var chessBoard =[];
 
-    for (var i=0;i<8;i++)
+    for (var i=0;i<boardSize;i++)
     {
     var row = [];
-    for (var j=0;j<8;j++)
+    for (var j=0;j<boardSize;j++)
     {
         row.push(0);
         count++;
@@ -33,7 +34,7 @@ export const handler = async(event,context) => {
                 row++;
                 column = 0;
             } else {
-                if (column ==7){
+                if (column ==boardSize-1){
                     row--;
                     chessBoard[lastPlacedColumn][row] = 0;
                     markQueensShadow (lastPlacedColumn,row,-1)
@@ -46,7 +47,7 @@ export const handler = async(event,context) => {
 
         }
         placed = false;
-        if (row == 8){solved = true};
+        if (row == boardSize){solved = true};
 
     }
    
@@ -59,23 +60,23 @@ export const handler = async(event,context) => {
 
 
 function markQueensShadow(column,row,counter){
-    for (i=0;i<8;i++){
+    for (i=0;i<boardSize;i++){
         chessBoard[i][row]+=counter;
         
         //console.log ("shadow @" + column + row);
      }
      chessBoard[column][row]-=2*counter;
-     for (i=0;i<8;i++){
+     for (i=0;i<boardSize;i++){
         chessBoard[column][i] +=counter;
         //console.log ("shadow @" + column + row);
         let leftOffset = i-row;
         let rightOffset = row-i;
         let leftOffsetColumn = column+leftOffset;
         let rightOffsetColumn = column+rightOffset;
-        if (leftOffsetColumn<0 && leftOffsetColumn>7){
+        if (leftOffsetColumn<0 && leftOffsetColumn>boardSize-1){
             chessBoard[leftOffsetColumn][i] += counter;  
         }
-        if (rightOffsetColumn<0 && rightOffsetColumn>7){
+        if (rightOffsetColumn<0 && rightOffsetColumn>boardSize-1){
             chessBoard[rightOffsetColumn][i] += counter;  
         }
      }
@@ -86,4 +87,3 @@ function markQueensShadow(column,row,counter){
 };
 
 
-};
