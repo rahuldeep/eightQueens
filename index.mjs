@@ -47,23 +47,10 @@ export const handler = async(event,context) => {
 
         }
         placed = false;
+        if (row == 7){solved = true};
 
     }
-    for (row=0;row<8;row++){
-        for (column=0;column<8;column++){
-            
-
-        }
-
-
-    }
-
-    
    
-
-
-    
-  
     const response = {
         statusCode: 200,
         body: JSON.stringify(chessBoard),
@@ -72,7 +59,15 @@ export const handler = async(event,context) => {
 
 
 
-function place(){};
+function place(column,row,counter){
+    for (i=0;i<7;i++){
+        chessBoard[i][row]+=counter;
+     }
+     for (i=0;i<7;i++){
+        chessBoard[column][i] +=counter;
+     }
+
+};
 
 function markQueensShadow(){};
 
