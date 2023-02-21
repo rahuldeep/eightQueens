@@ -33,11 +33,11 @@ export const handler = async(event,context) => {
                 row++;
                 column = 0;
             } else {
-                if (column ==8){
+                if (column ==7){
                     row--;
                     chessBoard[lastPlacedColumn][row] = 0;
                     markQueensShadow (lastPlacedColumn,row,-1)
-                    column = 0;
+                    column = lastPlacedColumn+1;
 
                 } else {
                     column++;
@@ -68,10 +68,10 @@ function markQueensShadow(column,row,counter){
      for (i=0;i<8;i++){
         chessBoard[column][i] +=counter;
         //console.log ("shadow @" + column + row);
-        leftOffset = i-row;
-        rightOffset = row-i;
-        leftOffsetColumn = column+leftOffset;
-        rightOffsetColumn = column+rightOffset;
+        let leftOffset = i-row;
+        let rightOffset = row-i;
+        let leftOffsetColumn = column+leftOffset;
+        let rightOffsetColumn = column+rightOffset;
         if (leftOffsetColumn<0 && leftOffsetColumn>7){
             chessBoard[leftOffsetColumn][i] += counter;  
         }
