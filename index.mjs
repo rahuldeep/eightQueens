@@ -27,6 +27,7 @@ export const handler = async(event,context) => {
             if (chessBoard[column][row] == 0){
                 chessBoard[column][row] = 1;
                 placed = true;
+                console.log('placed row ' + row+' column ' + column);
                 markQueensShadow(column,row,1);
                 let lastPlacedColumn = column;
                 row++;
