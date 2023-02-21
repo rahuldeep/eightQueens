@@ -1,8 +1,9 @@
 
 
 export const handler = async(event,context) => {
+    //variable for board size
     let boardSize = 3;
-    //INTITIALIZE 8X8 ARRAY
+    //INTITIALIZE board ARRAY
     var count = 1;
     var chessBoard =[];
 
@@ -16,7 +17,7 @@ export const handler = async(event,context) => {
     }
     chessBoard.push(row);
     }
-    
+    //set up variables to check progress and hold intermediary values
     let solved = false;
     let placed = false;
     var column = 0;
@@ -26,19 +27,28 @@ export const handler = async(event,context) => {
     while (!solved){
 
         while (!placed){
+            //check to see if current position is open
             if (chessBoard[column][row] == 0){
                 chessBoard[column][row] = 1;
                 placed = true;
                 console.log('placed row ' + row+' column ' + column);
+                //mark all areas that are blocked because of 
+                //the current placement
                 markQueensShadow(column,row,1);
                 let lastPlacedColumn = column;
                 row++;
                 column = 0;
             } else {
+                //check to see if we have run out columns for the current row without
+                //finding an open spot
                 if (column ==boardSize-1){
+                    //go back a row
                     row--;
+                    //remove the last placed queen
                     chessBoard[lastPlacedColumn][row] = 0;
-                    markQueensShadow (lastPlacedColumn,row,-1)
+                    //unmark all areas that are now open
+                    //
+                    markQueensShadow (lastPlacedColumn,row,-1);
                     if (column < 7 ){column = lastPlacedColumn+1} else{column=0};
 
                 } else {
@@ -61,13 +71,10 @@ export const handler = async(event,context) => {
 
 
 function markQueensShadow(column,row,counter){
-    for (i=0;i<boardSize;i++){
-        chessBoard[i][row]+=counter;
-        //console.log ("shadow @" + i + row);
-     }
-     chessBoard[column][row]-=2*counter;
+    
      for (i=0;i<boardSize;i++){
         chessBoard[column][i] +=counter;
+        chessBoard[i][row]+=counter;
         //console.log ("shadow @" + column + i);
         let leftOffset = i-row;
         let rightOffset = row-i;
@@ -82,7 +89,7 @@ function markQueensShadow(column,row,counter){
             //console.log ("shadow @" + rightOffsetColumn + i); 
         }
      }
-     chessBoard[column][row]-=2*counter;
+     chessBoard[column][row]-=4*counter;
      console.log(chessBoard);
      
      }
