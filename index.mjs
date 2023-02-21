@@ -16,18 +16,18 @@ export const handler = async(event,context) => {
     chessBoard.push(row);
     }
     
-    let solved = true;
-    let placed = true;
+    let solved = false;
+    let placed = false;
     var column = 0;
     var row = 0;
     
-    while (solved){
+    while (!solved){
 
-        while (placed && row <8){
+        while (!placed && row <8){
             console.log(chessBoard[column][row]);
             if (chessBoard[column][row] == 0){
                 chessBoard[column][row] = 1;
-                placed = false;
+                placed = true;
                 console.log('placed row ' + row+' column ' + column);
                 markQueensShadow(column,row,1);
                 let lastPlacedColumn = column;
@@ -46,7 +46,7 @@ export const handler = async(event,context) => {
             }
 
         }
-
+        placed = false;
 
     }
     for (row=0;row<8;row++){
