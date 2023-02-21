@@ -61,14 +61,27 @@ export const handler = async(event,context) => {
 function markQueensShadow(column,row,counter){
     for (i=0;i<8;i++){
         chessBoard[i][row]+=counter;
+        
         //console.log ("shadow @" + column + row);
      }
-     chessBoard[column][row]-=counter;
+     chessBoard[column][row]-=2*counter;
      for (i=0;i<8;i++){
         chessBoard[column][i] +=counter;
         //console.log ("shadow @" + column + row);
+        leftOffset = i-row;
+        rightOffset = row-i;
+        leftOffsetColumn = column+leftOffset;
+        rightOffsetColumn = column+rightOffset;
+        if (leftOffsetColumn<0 && leftOffsetColumn>7){
+            chessBoard[leftOffsetColumn][i] += counter;  
+        }
+        if (rightOffsetColumn<0 && rightOffsetColumn>7){
+            chessBoard[rightOffsetColumn][i] += counter;  
+        }
      }
-     chessBoard[column][row]-=counter;
+     chessBoard[column][row]-=2*counter;
+     
+     }
 
 };
 
