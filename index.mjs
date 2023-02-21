@@ -21,6 +21,7 @@ export const handler = async(event,context) => {
     let placed = false;
     var column = 0;
     var row = 0;
+    let lastPlacedColumn = 0;
     
     while (!solved){
 
