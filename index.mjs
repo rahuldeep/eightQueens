@@ -16,9 +16,52 @@ export const handler = async(event,context) => {
     chessBoard.push(row);
     }
     
-   
+    let solved = true;
+    let placed = true;
+    var column = 0;
+    var row = 0;
     
-    chessBoard [0],[1] = 1;
+    while (!solved && column < 8){
+
+        while (!placed && row <8){
+            if (chessBoard[column][row] == 0){
+                chessBoard[column][row] = 1;
+                placed = true;
+                markQueensShadow(column,row,1);
+                let lastPlacedColumn = column;
+                row++;
+                column = 0;
+            } else {
+                if (column ==7){
+                    row--;
+                    chessBoard[lastPlacedColumn][row] = 0;
+                    markQueensShadow (lastPlacedColumn,row,-1)
+                    column = 0;
+
+                } else {
+                    column++;
+                }
+            }
+
+        }
+
+
+    }
+    for (row=0;row<8;row++){
+        for (column=0;column<8;column++){
+            
+
+        }
+
+
+    }
+
+    
+   
+
+
+    
+    chessBoard [0][1] = 1;
     const response = {
         statusCode: 200,
         body: JSON.stringify(chessBoard),
@@ -27,8 +70,9 @@ export const handler = async(event,context) => {
 
 
 
+function place(){};
 
-
+function markQueensShadow(){};
 
 
 
