@@ -21,12 +21,13 @@ export const handler = async(event,context) => {
     var column = 0;
     var row = 0;
     
-    while (!solved && column < 8){
+    while (!solved){
 
-        while (!placed && row <8){
+        while (placed && row <8){
+            console.log(chessBoard[column][row]);
             if (chessBoard[column][row] == 0){
                 chessBoard[column][row] = 1;
-                placed = true;
+                placed = false;
                 console.log('placed row ' + row+' column ' + column);
                 markQueensShadow(column,row,1);
                 let lastPlacedColumn = column;
