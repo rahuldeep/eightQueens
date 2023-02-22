@@ -47,6 +47,8 @@ export const handler = async(event,context) => {
                     //remove the last placed queen
                     chessBoard[lastPlacedColumn][row] = 0;
                     console.log('removed row ' + row+' column ' + lastPlacedColumn);
+                    //put the next column from the last placed as the active one
+                    column=lastPlacedColumn+1;
                     //unmark all areas that are now open
                     //
                     markQueensShadow (lastPlacedColumn,row,-1);
@@ -89,12 +91,12 @@ function markQueensShadow(column,row,counter){
         let leftOffsetColumn = column+leftOffset;
         let rightOffsetColumn = column+rightOffset;
         //mark left diagonal
-        if (leftOffsetColumn>0 && leftOffsetColumn<boardSize-1){
+        if (leftOffsetColumn>0 && leftOffsetColumn<boardSize){
             if (leftOffset!=0){chessBoard[leftOffsetColumn][i] += counter}; 
             //console.log ("shadow @" + leftOffsetColumn + i); 
         }
         //mark right diagonal
-        if (rightOffsetColumn>0 && rightOffsetColumn<boardSize-1){
+        if (rightOffsetColumn>0 && rightOffsetColumn<boardSize){
             if (rightOffset!=0){chessBoard[rightOffsetColumn][i] += counter};  
             //console.log ("shadow @" + rightOffsetColumn + i); 
         }
