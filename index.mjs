@@ -9,13 +9,13 @@ export const handler = async(event,context) => {
 
     for (var i=0;i<boardSize;i++)
     {
-    var row = [];
+    var chessRow = [];
     for (var j=0;j<boardSize;j++)
     {
-        row.push(0);
-        count++;
+        //fill with 0s
+        chessRow.push(0);
     }
-    chessBoard.push(row);
+    chessBoard.push(chessRow);
     }
     //set up variables to check progress and hold intermediary values
     let solved = false;
@@ -35,7 +35,7 @@ export const handler = async(event,context) => {
                 //mark all areas that are blocked because of 
                 //the current placement
                 markQueensShadow(column,row,1);
-                let lastPlacedColumn = column;
+                lastPlacedColumn = column;
                 row++;
                 column = 0;
             } else {
@@ -46,10 +46,13 @@ export const handler = async(event,context) => {
                     row--;
                     //remove the last placed queen
                     chessBoard[lastPlacedColumn][row] = 0;
+                    console.log('removed row ' + row+' column ' + lastPlacedColumn);
                     //unmark all areas that are now open
                     //
                     markQueensShadow (lastPlacedColumn,row,-1);
-                    if (column < 7 ){column = lastPlacedColumn+1} else{column=0};
+                    //set current column to last one + 1
+                    //or wrap it around to 0
+                    if (column < boardSize-1 ){column = lastPlacedColumn+1} else{column=0};
 
                 } else {
                     column++;
@@ -58,6 +61,7 @@ export const handler = async(event,context) => {
 
         }
         placed = false;
+        //if we have reached the last row, we are done
         if (row == boardSize){solved = true};
 
     }
@@ -73,24 +77,30 @@ export const handler = async(event,context) => {
 function markQueensShadow(column,row,counter){
     
      for (i=0;i<boardSize;i++){
+        //mark the rows for that column
         chessBoard[column][i] +=counter;
+        //mark the columns for that row
         chessBoard[i][row]+=counter;
         //console.log ("shadow @" + column + i);
         let leftOffset = i-row;
         let rightOffset = row-i;
         let leftOffsetColumn = column+leftOffset;
         let rightOffsetColumn = column+rightOffset;
+        //mark left diagonal
         if (leftOffsetColumn>0 && leftOffsetColumn<boardSize-1){
             chessBoard[leftOffsetColumn][i] += counter; 
             //console.log ("shadow @" + leftOffsetColumn + i); 
         }
+        //mark right diagonal
         if (rightOffsetColumn>0 && rightOffsetColumn<boardSize-1){
             chessBoard[rightOffsetColumn][i] += counter;  
             //console.log ("shadow @" + rightOffsetColumn + i); 
         }
      }
+     //decrement the currently placed ceel because we would have
+     // gone over if 4 additional times
      chessBoard[column][row]-=4*counter;
-     console.log(chessBoard);
+     //console.log(chessBoard);
      
      }
 
