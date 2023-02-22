@@ -43,6 +43,7 @@ export const handler = async(event,context) => {
                 //finding an open spot
                 if (column ==boardSize-1){
                     //go back a row
+                    if (row=0){solved=true};
                     row--;
                     //remove the last placed queen
                     chessBoard[lastPlacedColumn][row] = 0;
