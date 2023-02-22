@@ -47,7 +47,7 @@ export const handler = async(event,context) => {
                     //remove the last placed queen
                     chessBoard[lastPlacedColumn][row] = 0;
                     console.log('removed row ' + row+' column ' + lastPlacedColumn);
-                    //put the next column from the last placed as the active one
+                    //put the next column from the last placed as the active
                     column=lastPlacedColumn+1;
                     //unmark all areas that are now open
                     //
