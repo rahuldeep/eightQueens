@@ -2,7 +2,7 @@
 
 export const handler = async(event,context) => {
     //variable for board size
-    let boardSize = 4;
+    let boardSize = 8;
     //INTITIALIZE board ARRAY
     var count = 1;
     var chessBoard =[];
