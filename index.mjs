@@ -2,7 +2,7 @@
 
 export const handler = async(event,context) => {
     //variable for board size
-    let boardSize = 3;
+    let boardSize = 4;
     //INTITIALIZE board ARRAY
     var count = 1;
     var chessBoard =[];
@@ -29,7 +29,7 @@ export const handler = async(event,context) => {
         while (!placed){
             //check to see if current position is open
             if (chessBoard[column][row] == 0){
-                chessBoard[column][row] = 1;
+                chessBoard[column][row] = "X";
                 placed = true;
                 console.log('placed row ' + row+' column ' + column);
                 //mark all areas that are blocked because of 
@@ -61,8 +61,10 @@ export const handler = async(event,context) => {
 
         }
         placed = false;
+        console.log(chessBoard);
         //if we have reached the last row, we are done
         if (row == boardSize){solved = true};
+
 
     }
    
@@ -97,10 +99,10 @@ function markQueensShadow(column,row,counter){
             //console.log ("shadow @" + rightOffsetColumn + i); 
         }
      }
-     //decrement the currently placed ceel because we would have
-     // gone over if 4 additional times
-     chessBoard[column][row]-=4*counter;
-     //console.log(chessBoard);
+     //reset the currently placed cell because we would have
+     // gone over if multiple times
+     if (counter=1) {chessBoard[column][row] = 1} else{chessBoard[column][row] = 0};
+     
      
      }
 
