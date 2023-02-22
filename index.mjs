@@ -80,9 +80,9 @@ function markQueensShadow(column,row,counter){
     
      for (i=0;i<boardSize;i++){
         //mark the rows for that column
-        chessBoard[column][i] +=counter;
+        if (i!= row){chessBoard[column][i] +=counter};
         //mark the columns for that row
-        chessBoard[i][row]+=counter;
+        if (i!=column){chessBoard[i][row]+=counter};
         //console.log ("shadow @" + column + i);
         let leftOffset = i-row;
         let rightOffset = row-i;
@@ -90,18 +90,18 @@ function markQueensShadow(column,row,counter){
         let rightOffsetColumn = column+rightOffset;
         //mark left diagonal
         if (leftOffsetColumn>0 && leftOffsetColumn<boardSize-1){
-            chessBoard[leftOffsetColumn][i] += counter; 
+            if (leftOffset!=0){chessBoard[leftOffsetColumn][i] += counter}; 
             //console.log ("shadow @" + leftOffsetColumn + i); 
         }
         //mark right diagonal
         if (rightOffsetColumn>0 && rightOffsetColumn<boardSize-1){
-            chessBoard[rightOffsetColumn][i] += counter;  
+            if (rightOffset!=0){chessBoard[rightOffsetColumn][i] += counter};  
             //console.log ("shadow @" + rightOffsetColumn + i); 
         }
      }
      //reset the currently placed cell because we would have
      // gone over if multiple times
-     if (counter=1) {chessBoard[column][row] = 1} else{chessBoard[column][row] = 0};
+     //if (counter=1) {chessBoard[column][row] = 1} else{chessBoard[column][row] = 0};
      
      
      }
