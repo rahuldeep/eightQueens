@@ -51,6 +51,8 @@ export const handler = async(event,context) => {
                     console.log(chessBoard);
                     //set current column to that row's solution
                     column = solution[row];
+                    //remove it from solution
+                     solution[row] = 0;
                 }
                     column++;
                 
@@ -90,8 +92,6 @@ function removePiece(row){
     let column = solution[row];
     //remove the last placed queen
     chessBoard[column][row] = 0;
-    //remove it from solution
-    solution[row] = 0;
     console.log('removed row ' + row +' column ' + column);
     console.log ('solution till now' + solution);
     //put the next column from the last placed as the active
