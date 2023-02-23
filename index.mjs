@@ -2,7 +2,7 @@
 
 export const handler = async(event,context) => {
     //variable for board size
-    let boardSize = 3;
+    let boardSize = 4;
     //INTITIALIZE board ARRAY
     var count = 1;
     var chessBoard =[];
@@ -32,6 +32,7 @@ export const handler = async(event,context) => {
             //check to see if current position is open
             if (chessBoard[column][row] == 0){
                 addPiece(column,row);
+                console.log(chessBoard);
                 row++;
                 column = 0;
                 placed = true;
@@ -97,7 +98,7 @@ function removePiece(row){
     //column=lastPlacedColumn+1;
     //unmark all areas that are now open
     //
-    markQueensShadow(solution[row],row,-1);
+    markQueensShadow(column,row,-1);
     
 }
 
