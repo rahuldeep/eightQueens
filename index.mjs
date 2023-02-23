@@ -74,7 +74,7 @@ export const handler = async(event,context) => {
 function addPiece(column,row){
     chessBoard[column][row] = "X";
      //add column number to solution array
-    solution[row] = 1;
+    solution[row] = column;
     console.log('placed row ' + row+' column ' + column);
     console.log ('solution till now' + solution);
     //mark all areas that are blocked because of 
@@ -112,13 +112,13 @@ function markQueensShadow(column,row,counter){
         let leftOffsetColumn = column+leftOffset;
         let rightOffsetColumn = column+rightOffset;
         //mark left diagonal
-        if (leftOffsetColumn>0 && leftOffsetColumn<boardSize){
-            if (leftOffset!=0){chessBoard[leftOffsetColumn][i] += counter}; 
+        if (leftOffsetColumn>0 && leftOffsetColumn<boardSize && leftOffset !=0){
+            chessBoard[leftOffsetColumn][i] += counter; 
             //console.log ("shadow @" + leftOffsetColumn + i); 
         }
         //mark right diagonal
-        if (rightOffsetColumn>0 && rightOffsetColumn<boardSize){
-            if (rightOffset!=0){chessBoard[rightOffsetColumn][i] += counter};  
+        if (rightOffsetColumn>0 && rightOffsetColumn<boardSize && rightOffset !=0){
+            chessBoard[rightOffsetColumn][i] += counter;  
             //console.log ("shadow @" + rightOffsetColumn + i); 
         }
      }
