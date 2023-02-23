@@ -39,6 +39,11 @@ export const handler = async(event,context) => {
                 //check to see if we have run out columns for the current row without
                 //finding an open spot
                 while (column == boardSize-1){
+                    //if you are at 1st row already, accept defeat
+                    if (row==0) {
+                        console.log("unsolvable!");
+                        solved = true;
+                    }
                     //go back 1 row and remove that piece
                     row--;
                     removePiece(row);
