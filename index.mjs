@@ -2,7 +2,7 @@
 
 export const handler = async(event,context) => {
     //variable for board size
-    let boardSize = 8;
+    let boardSize = 3;
     //INTITIALIZE board ARRAY
     var count = 1;
     var chessBoard =[];
@@ -32,19 +32,21 @@ export const handler = async(event,context) => {
             //check to see if current position is open
             if (chessBoard[column][row] == 0){
                 addPiece(column,row);
+                placed = true;
+                row++;
+                column = 0;
             } else {
                 //check to see if we have run out columns for the current row without
                 //finding an open spot
-                if (column ==boardSize-1){
-                    removePiece(column,row,lastPlacedColumn);
-                    //set current column to last one + 1
-                    //or call removePiece again for the last row
-                    if (column < boardSize-1 ){column = lastPlacedColumn+1
-                    } else{removePiece(column,row,solution[row-1])};
-
-                } else {
-                    column++;
+                while (column == boardSize-1){
+                    //go back 1 row and remove that piece
+                    row--;
+                    removePiece(row);
+                    //set current column to that row's solution
+                    column = solution[row];
                 }
+                    column++;
+                
             }
 
         }
@@ -66,32 +68,29 @@ export const handler = async(event,context) => {
 //adds a new queent o the board and marks all shadow cells    
 function addPiece(column,row){
     chessBoard[column][row] = "X";
-    placed = true;
-    //add column number to solution array
+     //add column number to solution array
     solution[row] = 1;
     console.log('placed row ' + row+' column ' + column);
     console.log ('solution till now' + solution);
     //mark all areas that are blocked because of 
     //the current placement
     markQueensShadow(column,row,1);
-    lastPlacedColumn = column;
-    row++;
-    column = 0;
+    //lastPlacedColumn = column;
+    
 }
 
-function removePiece(column,row,lastPlacedColumn){
-    //go back a row
-    row--;
+function removePiece(row){
+    
     //remove the last placed queen
-    chessBoard[lastPlacedColumn][row] = 0;
+    chessBoard[solution[row]][row] = 0;
     //remove it from solution
     solution[row] = 0;
-    console.log('removed row ' + row+' column ' + lastPlacedColumn);
+    console.log('removed row ' + row +' column ' + solution[row]);
     //put the next column from the last placed as the active
     //column=lastPlacedColumn+1;
     //unmark all areas that are now open
     //
-    markQueensShadow (lastPlacedColumn,row,-1);
+    markQueensShadow(solution[row],row,-1);
     
 }
 
