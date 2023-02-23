@@ -32,9 +32,9 @@ export const handler = async(event,context) => {
             //check to see if current position is open
             if (chessBoard[column][row] == 0){
                 addPiece(column,row);
-                placed = true;
                 row++;
                 column = 0;
+                placed = true;
             } else {
                 //check to see if we have run out columns for the current row without
                 //finding an open spot
@@ -47,6 +47,7 @@ export const handler = async(event,context) => {
                     //go back 1 row and remove that piece
                     row--;
                     removePiece(row);
+                    console.log(chessBoard);
                     //set current column to that row's solution
                     column = solution[row];
                 }
@@ -56,7 +57,7 @@ export const handler = async(event,context) => {
 
         }
         placed = false;
-        console.log(chessBoard);
+        
         //if we have reached the last row, we are done
         if (row == boardSize){solved = true};
 
@@ -85,12 +86,13 @@ function addPiece(column,row){
 }
 
 function removePiece(row){
-    
+    let column = solution[row];
     //remove the last placed queen
-    chessBoard[solution[row]][row] = 0;
+    chessBoard[column][row] = 0;
     //remove it from solution
     solution[row] = 0;
-    console.log('removed row ' + row +' column ' + solution[row]);
+    console.log('removed row ' + row +' column ' + column);
+    console.log ('solution till now' + solution);
     //put the next column from the last placed as the active
     //column=lastPlacedColumn+1;
     //unmark all areas that are now open
