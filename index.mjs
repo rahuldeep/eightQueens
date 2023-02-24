@@ -51,7 +51,7 @@ export const handler = async(event,context) => {
                     removePiece(row);
                     console.log(chessBoard);
                     //set current column to that row's solution
-                    column = solution[row]+1;
+                    column = solution[row];
                     console.log("current row & column & solution row val " , row , column, solution[row]);
                     //remove it from solution
                      solution[row] = 0;
