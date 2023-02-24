@@ -2,7 +2,7 @@
 
 export const handler = async(event,context) => {
     //variable for board size
-    let boardSize = 4;
+    let boardSize = 8;
     //INTITIALIZE board ARRAY
     var count = 1;
     var chessBoard =[];
@@ -45,16 +45,19 @@ export const handler = async(event,context) => {
                         console.log("unsolvable!");
                         solved = true;
                     }
-                    //go back 1 row and remove that piece
+                    //go back 1 row and remove the piece there
                     row--;
+                    console.log("solution before calling remove ", solution);
                     removePiece(row);
                     console.log(chessBoard);
                     //set current column to that row's solution
-                    column = solution[row];
+                    column = solution[row]+1;
+                    console.log("current row & column & solution row val " , row , column, solution[row]);
                     //remove it from solution
                      solution[row] = 0;
                 }
                     column++;
+                    console.log ("column incremented to", row,  column);
                 
             }
 
@@ -89,6 +92,7 @@ function addPiece(column,row){
 }
 
 function removePiece(row){
+    console.log("solution at the begining of function remove ", solution);
     let column = solution[row];
     //remove the last placed queen
     chessBoard[column][row] = 0;
