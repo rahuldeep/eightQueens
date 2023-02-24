@@ -4,7 +4,6 @@ export const handler = async(event,context) => {
     //variable for board size
     let boardSize = 8;
     //INTITIALIZE board ARRAY
-    var count = 1;
     var chessBoard =[];
     var solution =[];
 
@@ -24,7 +23,6 @@ export const handler = async(event,context) => {
     let placed = false;
     var column = 0;
     var row = 0;
-    let lastPlacedColumn = 0;
     
     while (!solved){
 
@@ -32,7 +30,7 @@ export const handler = async(event,context) => {
             //check to see if current position is open
             if (chessBoard[column][row] == 0){
                 addPiece(column,row);
-                console.log(chessBoard);
+                //console.log(chessBoard);
                 row++;
                 column = 0;
                 placed = true;
@@ -47,17 +45,17 @@ export const handler = async(event,context) => {
                     }
                     //go back 1 row and remove the piece there
                     row--;
-                    console.log("solution before calling remove ", solution);
+                    //console.log("solution before calling remove ", solution);
                     removePiece(row);
-                    console.log(chessBoard);
+                    //console.log(chessBoard);
                     //set current column to that row's solution
                     column = solution[row];
-                    console.log("current row & column & solution row val " , row , column, solution[row]);
+                    //console.log("current row & column & solution row val " , row , column, solution[row]);
                     //remove it from solution
                      solution[row] = 0;
                 }
                     column++;
-                    console.log ("column incremented to", row,  column);
+                    //console.log ("column incremented to", row,  column);
                 
             }
 
@@ -72,7 +70,7 @@ export const handler = async(event,context) => {
    
     const response = {
         statusCode: 200,
-        body: JSON.stringify(chessBoard),
+        body: JSON.stringify(solution),
     };
     return response;
 
@@ -92,7 +90,6 @@ function addPiece(column,row){
 }
 
 function removePiece(row){
-    console.log("solution at the begining of function remove ", solution);
     let column = solution[row];
     //remove the last placed queen
     chessBoard[column][row] = 0;
