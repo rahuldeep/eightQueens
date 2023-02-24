@@ -23,6 +23,7 @@ export const handler = async(event,context) => {
     let placed = false;
     var column = 0;
     var row = 0;
+    var steps=0;
     
     while (!solved){
 
@@ -30,6 +31,7 @@ export const handler = async(event,context) => {
             //check to see if current position is open
             if (chessBoard[column][row] == 0){
                 addPiece(column,row);
+                steps++;
                 //console.log(chessBoard);
                 row++;
                 column = 0;
@@ -47,6 +49,7 @@ export const handler = async(event,context) => {
                     row--;
                     //console.log("solution before calling remove ", solution);
                     removePiece(row);
+                    steps++;
                     //console.log(chessBoard);
                     //set current column to that row's solution
                     column = solution[row];
@@ -70,7 +73,7 @@ export const handler = async(event,context) => {
    
     const response = {
         statusCode: 200,
-        body: JSON.stringify(solution),
+        body: 'the solution' + JSON.stringify(solution)+ 'in steps: ' + steps,
     };
     return response;
 
