@@ -3,6 +3,8 @@
 export const handler = async(event,context) => {
     //variable for board size
     let boardSize = 8;
+    //how many solution to do
+    let solutionCount =2;
     //INTITIALIZE board ARRAY
     var chessBoard =[];
     var solution =[];
@@ -25,60 +27,69 @@ export const handler = async(event,context) => {
     var row = 0;
     var steps=0;
     
-    while (!solved){
+        while (!solved){
 
-        while (!placed){
-            //check to see if current position is open
-            if (chessBoard[column][row] == 0){
-                addPiece(column,row);
-                steps++;
-                //console.log(chessBoard);
-                row++;
-                column = 0;
-                placed = true;
-            } else {
-                //check to see if we have run out columns for the current row without
-                //finding an open spot
-                while (column == boardSize-1){
-                    //if you are at 1st row already, accept defeat
-                    if (row==0) {
-                        console.log("unsolvable!");
-                        solved = true;
-                    }
-                    //go back 1 row and remove the piece there
-                    row--;
-                    //console.log("solution before calling remove ", solution);
-                    removePiece(row);
+            while (!placed){
+                //check to see if current position is open
+                if (chessBoard[column][row] == 0){
+                    addPiece(column,row);
                     steps++;
                     //console.log(chessBoard);
-                    //set current column to that row's solution
-                    column = solution[row];
-                    //console.log("current row & column & solution row val " , row , column, solution[row]);
-                    //remove it from solution
-                     solution[row] = 0;
+                    row++;
+                    column = 0;
+                    placed = true;
+                } else {
+                    //check to see if we have run out columns for the current row without
+                    //finding an open spot
+                    while (column == boardSize-1){
+                        //if you are at 1st row already, accept defeat
+                        if (row==0) {
+                            console.log("unsolvable!");
+                            solved = true;
+                        }
+                        
+                        //go back one row and remove the piece
+                        goBack(row);
+                    }
+                        column++;
+                        //console.log ("column incremented to", row,  column);
+                    
                 }
-                    column++;
-                    //console.log ("column incremented to", row,  column);
-                
+
             }
+            placed = false;
+            
+            //if we have reached the last row, we are done
+            if (row == boardSize){solved = true};
+            console.log (solution);
+            i++;
+
 
         }
-        placed = false;
+        solved = false;
         
-        //if we have reached the last row, we are done
-        if (row == boardSize){solved = true};
-
-
-    }
-   
+    
     const response = {
         statusCode: 200,
         body: 'the solution' + JSON.stringify(solution)+ 'in steps: ' + steps,
     };
     return response;
 
+function goBack(row);{
 
-//adds a new queent o the board and marks all shadow cells    
+      //go back 1 row and remove the piece there
+      row--;
+      removePiece(row);
+      steps++;
+      //console.log(chessBoard);
+      //set current column to that row's solution
+      column = solution[row];
+      //console.log("current row & column & solution row val " , row , column, solution[row]);
+      //remove it from solution
+      solution[row] = 0;
+}
+
+//adds a new queen to the board and marks all shadow cells    
 function addPiece(column,row){
     chessBoard[column][row] = "X";
      //add column number to solution array
