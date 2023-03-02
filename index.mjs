@@ -1,3 +1,4 @@
+const trying = require('./trying');
 
 
 export const handler = async(event,context) => {
@@ -68,23 +69,21 @@ export const handler = async(event,context) => {
         }
         solved = false;
         
-    
+    trying.trying();
     const response = {
         statusCode: 200,
         body: 'the solution' + JSON.stringify(solution)+ 'in steps: ' + steps,
     };
     return response;
 
-function goBack(row);{
+function goBack(row){
 
       //go back 1 row and remove the piece there
       row--;
       removePiece(row);
       steps++;
-      //console.log(chessBoard);
       //set current column to that row's solution
       column = solution[row];
-      //console.log("current row & column & solution row val " , row , column, solution[row]);
       //remove it from solution
       solution[row] = 0;
 }
