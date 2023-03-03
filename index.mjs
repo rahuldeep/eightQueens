@@ -1,14 +1,12 @@
-const trying = require('./trying');
-
-
+ //INTITIALIZE global board & soluton array
+ var chessBoard =[];
+ var solution =[];
 export const handler = async(event,context) => {
     //variable for board size
     let boardSize = 8;
     //how many solution to do
     let solutionCount =2;
-    //INTITIALIZE board ARRAY
-    var chessBoard =[];
-    var solution =[];
+   
 
     for (var i=0;i<boardSize;i++)
     {
@@ -75,7 +73,7 @@ export const handler = async(event,context) => {
         body: 'the solution' + JSON.stringify(solution)+ 'in steps: ' + steps,
     };
     return response;
-
+}
 function goBack(row){
 
       //go back 1 row and remove the piece there
@@ -146,6 +144,6 @@ function markQueensShadow(column,row,counter){
      
      }
 
-};
+
 
 
