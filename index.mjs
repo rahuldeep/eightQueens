@@ -51,6 +51,7 @@ export const handler = async(event,context) => {
                         
                         //go back one row and remove the piece
                         column = goBack(row);
+                        row--;
                         steps++;
                         }
                     }
@@ -80,13 +81,14 @@ export const handler = async(event,context) => {
 }
 function goBack(row){
 
-      //go back 1 row and remove the piece there
+      //go back 1 row 
       row--;
       //set current column to that row's solution
       var column = solution[row];
+      //remove queen
       removePiece(row);
       
-      
+      //return columns from where the queen was removed
       return column;
 }
 
@@ -116,8 +118,7 @@ function removePiece(row){
     //column=lastPlacedColumn+1;
     //unmark all areas that are now open
     //
-    markQueensShadow(column,row,-1);
-    
+    markQueensShadow(column,row,-1);    
 }
 
 function markQueensShadow(column,row,counter){
