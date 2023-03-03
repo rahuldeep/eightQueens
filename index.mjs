@@ -7,7 +7,7 @@ export const handler = async(event,context) => {
     //var for how many steps it took
     var steps = 0;
     //how many solution to do
-    let solutionCount =2;
+    let solutionCount =3;
    
 
     for (var i=0;i<boardSize;i++)
@@ -27,55 +27,65 @@ export const handler = async(event,context) => {
     var column = 0;
     var row = 0;
     var steps=0;
-    
-        while (!solved){
+        for (var i = 0;i++;i<solutionCount){
+            while (!solved){
 
-            while (!placed){
-                //check to see if current position is open
-                if (chessBoard[column][row] == 0){
-                    addPiece(column,row);
-                    steps++;
-                    //console.log(chessBoard);
-                    row++;
-                    column = 0;
-                    placed = true;
-                } else {
-                    //check to see if we have run out columns for the current row without
-                    //finding an open spot
-                    while (column == boardSize-1){
-                        //if you are at 1st row already, accept defeat
-                        if (row==0) {
-                            console.log("unsolvable!");
-                            solved = true;
-                        } else {
-                        
-                        //go back one row and remove the piece
-                        column = goBack(row);
-                        row--;
+                while (!placed){
+                    //check to see if current position is open
+                    if (chessBoard[column][row] == 0){
+                        addPiece(column,row);
                         steps++;
+                        //console.log(chessBoard);
+                        row++;
+                        column = 0;
+                        placed = true;
+                    } else {
+                        //check to see if we have run out columns for the current row without
+                        //finding an open spot
+                        while (column == boardSize-1){
+                            //if you are at 1st row already, accept defeat
+                            if (row==0) {
+                                console.log("unsolvable!");
+                                solved = true;
+                            } else {
+                            
+                            //go back one row and remove the piece
+                            column = goBack(row);
+                            row--;
+                            steps++;
+                            }
                         }
+                            column++;
+                            //console.log ("column incremented to", row,  column);
+                        
                     }
-                        column++;
-                        //console.log ("column incremented to", row,  column);
-                    
+
                 }
+                placed = false;
+                
+                //if we have reached the last row, we are done
+                if (row == boardSize){solved = true};
+                
+
 
             }
-            placed = false;
-            
-            //if we have reached the last row, we are done
-            if (row == boardSize){solved = true};
-            console.log (solution);
-            i++;
-
-
-        }
-        solved = false;
         
+            console.log (JSON.stringify(solution) + ' in steps ' + steps);
+            //set up for next solution
+            solved = false;
+            //remove the solution for the lass row of the board
+            column = goBack(boardSize);
+            //set row for the last row of the board
+            row = boardSize - 1;
+            //set column to the next column than the last solution fo the last row
+            column++;
+            //increment counter for next solution
+            i++;
+        }
 
     const response = {
         statusCode: 200,
-        body: 'the solution' + JSON.stringify(solution)+ 'in steps: ' + steps,
+        
     };
     return response;
 }
