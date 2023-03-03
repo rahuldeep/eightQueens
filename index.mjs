@@ -47,11 +47,12 @@ export const handler = async(event,context) => {
                         if (row==0) {
                             console.log("unsolvable!");
                             solved = true;
-                        }
+                        } else {
                         
                         //go back one row and remove the piece
                         column = goBack(row);
                         steps++;
+                        }
                     }
                         column++;
                         //console.log ("column incremented to", row,  column);
@@ -81,11 +82,11 @@ function goBack(row){
 
       //go back 1 row and remove the piece there
       row--;
-      removePiece(row);
       //set current column to that row's solution
       var column = solution[row];
-      //remove it from solution
-      solution[row] = 0;
+      removePiece(row);
+      
+      
       return column;
 }
 
@@ -99,7 +100,7 @@ function addPiece(column,row){
     //mark all areas that are blocked because of 
     //the current placement
     markQueensShadow(column,row,1);
-    //lastPlacedColumn = column;
+    
     
 }
 
@@ -107,6 +108,8 @@ function removePiece(row){
     let column = solution[row];
     //remove the last placed queen
     chessBoard[column][row] = 0;
+    //remove it from solution
+    solution[row] = 0;
     console.log('removed row ' + row +' column ' + column);
     console.log ('solution till now' + solution);
     //put the next column from the last placed as the active
