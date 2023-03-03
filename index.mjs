@@ -1,9 +1,11 @@
  //INTITIALIZE global board & soluton array
  var chessBoard =[];
  var solution =[];
+ //global variable for board size
+ const boardSize = 8;
 export const handler = async(event,context) => {
-    //variable for board size
-    let boardSize = 8;
+    //var for how many steps it took
+    var steps = 0;
     //how many solution to do
     let solutionCount =2;
    
@@ -48,7 +50,8 @@ export const handler = async(event,context) => {
                         }
                         
                         //go back one row and remove the piece
-                        goBack(row);
+                        column = goBack(row);
+                        steps++;
                     }
                         column++;
                         //console.log ("column incremented to", row,  column);
@@ -67,7 +70,7 @@ export const handler = async(event,context) => {
         }
         solved = false;
         
-    trying.trying();
+
     const response = {
         statusCode: 200,
         body: 'the solution' + JSON.stringify(solution)+ 'in steps: ' + steps,
@@ -79,11 +82,11 @@ function goBack(row){
       //go back 1 row and remove the piece there
       row--;
       removePiece(row);
-      steps++;
       //set current column to that row's solution
-      column = solution[row];
+      var column = solution[row];
       //remove it from solution
       solution[row] = 0;
+      return column;
 }
 
 //adds a new queen to the board and marks all shadow cells    
@@ -116,7 +119,7 @@ function removePiece(row){
 
 function markQueensShadow(column,row,counter){
     
-     for (i=0;i<boardSize;i++){
+     for (var i=0;i<boardSize;i++){
         //mark the rows for that column
         if (i!= row){chessBoard[column][i] +=counter};
         //mark the columns for that row
