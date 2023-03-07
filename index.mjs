@@ -26,6 +26,7 @@ export const handler = async(event,context) => {
     let row = 0;
      //var for how many steps it took
     let steps=0;
+    let solutionCount = 0;
         while (!foundAllSoultions){    
             while (!foundSolution){
 
@@ -45,7 +46,7 @@ export const handler = async(event,context) => {
                             //if you are at 1st row already, accept defeat
                             if (row==0) {
                                 console.log("unsolvable!");
-                                solved = true;
+                                foundAllSoultions = true;
                             } else {
                             
                             //go back one row and remove the piece
@@ -60,7 +61,7 @@ export const handler = async(event,context) => {
                     }
 
                 }
-                placedQueen = false;
+               
                 
 
                  //if we have reached the last row and last column, we have found all solutions
@@ -69,15 +70,16 @@ export const handler = async(event,context) => {
                 //if we have reached the last row only, we have found a solutions
                         if (row == boardSize){foundSolution = true};
                     }
+                placedQueen = false;
 
 
             }
         
             console.log (JSON.stringify(solution) + ' in steps ' + steps);
-            console.log('k value ' + k);
+            solutionCount++;
             //set up for next solution
             foundSolution = false;
-            //remove the solution for the lass row of the board
+            //remove the solution for the last row of the board
             column = goBack(boardSize);
             //set row for the last row of the board
             row = boardSize - 1;
@@ -93,10 +95,11 @@ export const handler = async(event,context) => {
         
     };
     return response;
-}
+};
 
 
 //function to go back a row and remove a queen. calls removePiece
+//returns the column from which the piece was removed
 function goBack(row){
 
       //go back 1 row 
