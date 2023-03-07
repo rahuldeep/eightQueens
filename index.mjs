@@ -1,18 +1,15 @@
  //INTITIALIZE global board & soluton array
- var chessBoard =[];
- var solution =[];
+ let chessBoard =[];
+ let solution =[];
  //global variable for board size
  const boardSize = 8;
 export const handler = async(event,context) => {
-    //var for how many steps it took
-    var steps = 0;
-    //how many solution to do
-    let solutionCount =3;
    
+    //inittialize board
 
     for (var i=0;i<boardSize;i++)
     {
-        var chessRow = [];
+        let chessRow = [];
         for (var j=0;j<boardSize;j++)
             {
                 //fill with 0s
@@ -22,15 +19,17 @@ export const handler = async(event,context) => {
         solution.push(0);
     }
     //set up variables to check progress and hold intermediary values
-    let solved = false;
-    let placed = false;
-    var column = 0;
-    var row = 0;
-    var steps=0;
-        for (var i = 0;i++;i<solutionCount){
-            while (!solved){
+    let foundAllSoultions = false;
+    let foundSolution = false;
+    let placedQueen = false;
+    let column = 0;
+    let row = 0;
+     //var for how many steps it took
+    let steps=0;
+        while (!foundAllSoultions){    
+            while (!foundSolution){
 
-                while (!placed){
+                while (!placedQueen){
                     //check to see if current position is open
                     if (chessBoard[column][row] == 0){
                         addPiece(column,row);
@@ -38,7 +37,7 @@ export const handler = async(event,context) => {
                         //console.log(chessBoard);
                         row++;
                         column = 0;
-                        placed = true;
+                        placedQueen = true;
                     } else {
                         //check to see if we have run out columns for the current row without
                         //finding an open spot
@@ -61,18 +60,23 @@ export const handler = async(event,context) => {
                     }
 
                 }
-                placed = false;
+                placedQueen = false;
                 
-                //if we have reached the last row, we are done
-                if (row == boardSize){solved = true};
-                
+
+                 //if we have reached the last row and last column, we have found all solutions
+                 if (row == boardSize && column ==boardSize){foundAllSoultions = true}
+                    else {
+                //if we have reached the last row only, we have found a solutions
+                        if (row == boardSize){foundSolution = true};
+                    }
 
 
             }
         
             console.log (JSON.stringify(solution) + ' in steps ' + steps);
+            console.log('k value ' + k);
             //set up for next solution
-            solved = false;
+            foundSolution = false;
             //remove the solution for the lass row of the board
             column = goBack(boardSize);
             //set row for the last row of the board
@@ -80,15 +84,19 @@ export const handler = async(event,context) => {
             //set column to the next column than the last solution fo the last row
             column++;
             //increment counter for next solution
-            i++;
+            
         }
 
     const response = {
         statusCode: 200,
+        body: "all done!"
         
     };
     return response;
 }
+
+
+//function to go back a row and remove a queen. calls removePiece
 function goBack(row){
 
       //go back 1 row 
@@ -102,7 +110,7 @@ function goBack(row){
       return column;
 }
 
-//adds a new queen to the board and marks all shadow cells    
+//function to add a new queen to the board and marks all shadow cells    
 function addPiece(column,row){
     chessBoard[column][row] = "X";
      //add column number to solution array
@@ -116,6 +124,7 @@ function addPiece(column,row){
     
 }
 
+//function to remove a queen
 function removePiece(row){
     let column = solution[row];
     //remove the last placed queen
@@ -131,6 +140,9 @@ function removePiece(row){
     markQueensShadow(column,row,-1);    
 }
 
+//function to add (paramer of 1) or remove (parameter of -1) the
+//'threatened' cells if a queen is added or removed
+//if continues to increment the count of the 'threat' for overlapping 'threats'
 function markQueensShadow(column,row,counter){
     
      for (var i=0;i<boardSize;i++){
