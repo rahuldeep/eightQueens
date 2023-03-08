@@ -75,18 +75,27 @@ export const handler = async(event,context) => {
 
             }
         
-            console.log (JSON.stringify(solution) + ' in steps ' + steps);
             solutionCount++;
+            console.log (JSON.stringify(solution) + 'solution number' + solutionCount + ' in steps ' + steps);
+            
             //set up for next solution
             foundSolution = false;
-            //remove the solution for the last row of the board
+            //remove the last solution from the last row
             column = goBack(boardSize);
             //set row for the last row of the board
             row = boardSize - 1;
-            //set column to the next column than the last solution fo the last row
+            //remove the solution for the last row of the board
+            while (column == boardSize-1){
+                
+                //go back one row and remove the piece
+                column = goBack(row);
+                row--;
+                steps++;
+                
+            }
+            //set column to the next column than the last solution fo the last row 
             column++;
-            //increment counter for next solution
-            
+          
         }
 
     const response = {
