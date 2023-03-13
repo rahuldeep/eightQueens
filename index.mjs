@@ -129,8 +129,8 @@ function addPiece(column,row){
     chessBoard[column][row] = "X";
      //add column number to solution array
     solution[row] = column;
-    console.log('placed row ' + row+' column ' + column);
-    console.log ('solution till now' + solution);
+    //console.log('placed row ' + row+' column ' + column);
+   // console.log ('solution till now' + solution);
     //mark all areas that are blocked because of 
     //the current placement
     markQueensShadow(column,row,1);
@@ -145,8 +145,8 @@ function removePiece(row){
     chessBoard[column][row] = 0;
     //remove it from solution
     solution[row] = 0;
-    console.log('removed row ' + row +' column ' + column);
-    console.log ('solution till now' + solution);
+    //console.log('removed row ' + row +' column ' + column);
+   // console.log ('solution till now' + solution);
     //put the next column from the last placed as the active
     //column=lastPlacedColumn+1;
     //unmark all areas that are now open
