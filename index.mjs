@@ -46,13 +46,13 @@ export const handler = async(event,context) => {
                             //if you are at 1st row already, accept defeat
                             if (row==0) {
                                 console.log("unsolvable!");
-                                foundAllSoultions = true;
-                                foundSolution = true;
-                                placedQueen = true;
+                                let foundAllSoultions = true;
+                                let foundSolution = true;
+                                let placedQueen = true;
                             } else {
                             
                             //go back one row and remove the piece
-                            column = goBack(row);
+                            let column = goBack(row);
                             row--;
                             steps++;
                             }
@@ -67,7 +67,10 @@ export const handler = async(event,context) => {
                 
 
                  //if we have reached the last row and last column, we have found all solutions
-                 if (row == boardSize && column ==boardSize){foundAllSoultions = true}
+                 if (row == boardSize && column ==boardSize){
+                    let foundAllSoultions = true;
+                    let foundSolution = true;
+                }
                     else {
                 //if we have reached the last row only, we have found a solutions
                         if (row == boardSize){foundSolution = true};
