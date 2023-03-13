@@ -47,6 +47,8 @@ export const handler = async(event,context) => {
                             if (row==0) {
                                 console.log("unsolvable!");
                                 foundAllSoultions = true;
+                                foundSolution = true;
+                                placedQueen = true;
                             } else {
                             
                             //go back one row and remove the piece
